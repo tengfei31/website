@@ -27,4 +27,6 @@ replace (
 	github.com/tengfei31/website/pkg/setting => ./pkg/setting
 	github.com/tengfei31/website/pkg/util => ./pkg/util
 	github.com/tengfei31/website/routers => ./routers
+	// github.com/tengfei31/website/routers/api => ./routers/api
+	// github.com/tengfei31/website/routers/api/v1 => ./routers/api/v1
 )
