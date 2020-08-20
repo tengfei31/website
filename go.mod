@@ -3,7 +3,7 @@ module github.com/tengfei31/website
 go 1.15
 
 require (
-	github.com/astaxie/beego v1.12.2 // indirect
+	github.com/astaxie/beego v1.12.2
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-delve/delve v1.5.0 // indirect
 	github.com/go-ini/ini v1.60.0
