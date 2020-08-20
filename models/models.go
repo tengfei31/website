@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 16:46:49
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-19 18:12:26
+ * @LastEditTime: 2020-08-20 16:26:25
  * @Description: plase write Description
  */
 package models
@@ -12,6 +12,7 @@ import (
 	"log"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/tengfei31/website/pkg/setting"
 )
 
@@ -40,7 +41,7 @@ func init() {
 	password = sec.Key("PASSWORD").String()
 	host = sec.Key("HOST").String()
 	tablePrefix = sec.Key("TABLE_PREFIX").String()
-	db, err := gorm.Open(dbType, fmt.Printf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, dbName))
+	db, err := gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, dbName))
 	if err != nil {
 		log.Println(err)
 	}
