@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-21 11:54:20
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-21 21:19:31
+ * @LastEditTime: 2020-08-21 21:44:28
  * @Description: plase write Description
  */
 package v1
@@ -22,7 +22,7 @@ import (
 
 //获取单个文章
 func GetArticle(c *gin.Context) {
-	id := com.StrTo(c.Query("id")).MustInt()
+	id := com.StrTo(c.Param("id")).MustInt()
 	valid := validation.Validation{}
 	valid.Min(id, 1, "id").Message("ID必须大于0")
 	
