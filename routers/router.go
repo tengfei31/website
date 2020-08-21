@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 20:15:28
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-20 17:08:26
+ * @LastEditTime: 2020-08-21 14:11:20
  * @Description: plase write Description
  */
 package routers
@@ -31,24 +31,34 @@ func InitRouter() *gin.Engine {
         //更新指定标签
         apiv1.PUT("/tags/:id", v1.EditTag)
         //删除指定标签
-        apiv1.DELETE("/tags/:id", v1.DelTag)
-    }
-	var data = make(map[string]string)
-	data["name"] = "wtf"
-	data["age"] = "男"
-	data["sex"] = "27"
+		apiv1.DELETE("/tags/:id", v1.DelTag)
+		
+		/**
+		 * 文章路由
+		 */
+		//获取文章列表
+        apiv1.GET("articles", v1.GetArticles)
+        //获取指定文章
+        apiv1.GET("articles/:id", v1.GetArticle)
+        //新建文章
+        apiv1.POST("articles", v1.AddArticle)
+        //更新指定文章
+        apiv1.PUT("articles/:id", v1.EditArticle)
+        //删除指定文章
+        apiv1.DELETE("articles/:id", v1.DeleteArticle)
+	}
+	
+	
 	r.GET("ping", func(c *gin.Context) {
+		var data = make(map[string]string)
+		data["name"] = "wtf"
+		data["age"] = "男"
+		data["sex"] = "27"
 		//c.String(http.StatusOK, "pong")
 		c.JSON(http.StatusOK, gin.H{
 			"msg":"success",
 			"code":0,
 			"data":data,
-		})
-	})
-
-	r.GET("test", func (c *gin.Context)  {
-		c.JSON(http.StatusOK, gin.H{
-			"message" : "test",
 		})
 	})
 	
