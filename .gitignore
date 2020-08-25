@@ -1,3 +1,5 @@
 .idea
 .vscode
 main
+runtime/logs
+__debug_bin

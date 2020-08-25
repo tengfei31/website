@@ -2,19 +2,19 @@
  * @Author: wtf
  * @Date: 2020-08-24 19:48:55
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-25 11:54:58
+ * @LastEditTime: 2020-08-25 15:11:54
  * @Description: plase write Description
  */
 package api
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 	"github.com/tengfei31/website/models"
 	"github.com/tengfei31/website/pkg/e"
+	"github.com/tengfei31/website/pkg/logging"
 	"github.com/tengfei31/website/pkg/util"
 )
 
@@ -49,7 +49,7 @@ func GetAuth(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{

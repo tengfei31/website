@@ -2,19 +2,19 @@
  * @Author: wtf
  * @Date: 2020-08-21 11:54:20
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-21 21:44:28
+ * @LastEditTime: 2020-08-25 15:14:33
  * @Description: plase write Description
  */
 package v1
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 	"github.com/tengfei31/website/models"
 	"github.com/tengfei31/website/pkg/e"
+	"github.com/tengfei31/website/pkg/logging"
 	"github.com/tengfei31/website/pkg/setting"
 	"github.com/tengfei31/website/pkg/util"
 	"github.com/unknwon/com"
@@ -37,7 +37,7 @@ func GetArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+            logging.Info(err.Key, err.Message)
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{
@@ -74,7 +74,7 @@ func GetArticles(c *gin.Context) {
 		data["total"] = models.GetArticleTotal(maps)
 	} else {
         for _, err := range valid.Errors {
-            log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+            logging.Info(err.Key, err.Message)
         }
 	}
 	c.JSON(http.StatusOK, gin.H{
@@ -118,7 +118,7 @@ func AddArticle(c *gin.Context) {
         }
     } else {
         for _, err := range valid.Errors {
-            log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+            logging.Info(err.Key, err.Message)
         }
     }
 
@@ -180,7 +180,7 @@ func EditArticle(c *gin.Context) {
         }
     } else {
         for _, err := range valid.Errors {
-            log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+            logging.Info(err.Key, err.Message)
         }
     }
 
@@ -208,7 +208,7 @@ func DeleteArticle(c *gin.Context) {
         }
     } else {
         for _, err := range valid.Errors {
-            log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+            logging.Info(err.Key, err.Message)
         }
     }
 
