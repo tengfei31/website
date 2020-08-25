@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 20:15:28
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-25 12:05:05
+ * @LastEditTime: 2020-08-25 17:02:44
  * @Description: plase write Description
  */
 package routers
@@ -11,6 +11,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+	_ "github.com/tengfei31/website/docs"
 	"github.com/tengfei31/website/middleware/jwt"
 	"github.com/tengfei31/website/pkg/setting"
 	"github.com/tengfei31/website/routers/api"
@@ -23,6 +26,8 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger(), gin.Recovery())
 	gin.SetMode(setting.RunMode)
 	
+	//文档访问地址/swagger/index.html
+	r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	//授权路由
 	r.GET("auth", api.GetAuth)

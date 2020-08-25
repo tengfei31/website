@@ -12,7 +12,11 @@ import (
 	"github.com/unknwon/com"
 )
 
-//获取多个文章标签
+// @Summary 获取多个文章标签
+// @Param name query string true "标签"
+// @Param state query int false "状态"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/tags [get]
 func GetTags(c *gin.Context) {
     name := c.Query("name")
 
@@ -41,7 +45,12 @@ func GetTags(c *gin.Context) {
     })
 }
 
-//新增文章标签
+// @Summary 新增文章标签
+// @Param name query string true "标签"
+// @Param state query int false "状态"
+// @Param created_by query int false "创建者"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/tags [post]
 func AddTag(c *gin.Context) {
     name := c.Query("name")
     state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
