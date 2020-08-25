@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 20:15:28
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-21 14:11:20
+ * @LastEditTime: 2020-08-25 12:05:05
  * @Description: plase write Description
  */
 package routers
@@ -11,7 +11,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/tengfei31/website/middleware/jwt"
 	"github.com/tengfei31/website/pkg/setting"
+	"github.com/tengfei31/website/routers/api"
 	v1 "github.com/tengfei31/website/routers/api/v1"
 )
 
@@ -21,9 +23,15 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger(), gin.Recovery())
 	gin.SetMode(setting.RunMode)
 	
+
+	//授权路由
+	r.GET("auth", api.GetAuth)
+
 	//注册路由
-    apiv1 := r.Group("/api/v1")
+	apiv1 := r.Group("/api/v1")
+	apiv1.Use(jwt.JWT())
     {
+		//标签路由
         //获取标签列表
         apiv1.GET("/tags", v1.GetTags)
         //新建标签
@@ -33,9 +41,7 @@ func InitRouter() *gin.Engine {
         //删除指定标签
 		apiv1.DELETE("/tags/:id", v1.DelTag)
 		
-		/**
-		 * 文章路由
-		 */
+		//文章路由
 		//获取文章列表
         apiv1.GET("articles", v1.GetArticles)
         //获取指定文章

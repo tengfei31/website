@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/astaxie/beego v1.12.2
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-delve/delve v1.5.0 // indirect
 	github.com/go-ini/ini v1.60.0
@@ -23,11 +24,12 @@ require (
 replace (
 	github.com/tengfei31/website/conf => ./conf
 	github.com/tengfei31/website/middleware => ./middleware
+	github.com/tengfei31/website/middleware/jwt => ./middleware/jwt
 	github.com/tengfei31/website/models => ./models
 	github.com/tengfei31/website/pkg/e => ./pkg/e
 	github.com/tengfei31/website/pkg/setting => ./pkg/setting
 	github.com/tengfei31/website/pkg/util => ./pkg/util
 	github.com/tengfei31/website/routers => ./routers
-// github.com/tengfei31/website/routers/api => ./routers/api
-// github.com/tengfei31/website/routers/api/v1 => ./routers/api/v1
+	// github.com/tengfei31/website/routers/api => ./routers/api
+	// github.com/tengfei31/website/routers/api/v1 => ./routers/api/v1
 )
