@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 21:01:58
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-20 21:19:56
+ * @LastEditTime: 2020-08-27 17:04:58
  * @Description: plase write Description
  */
 package models
@@ -79,6 +79,11 @@ func (tag *Tag) BeforeCreate(scope *gorm.Scope) error {
 func (tag *Tag) BeforeUpdate(scope *gorm.Scope) error {
 	scope.SetColumn("ModifiedOn", time.Now().Unix())
 	return nil
+}
+
+func CleanAllTag() bool {
+	db.Unscoped().Where("deleted_on != ?", 0).Delete(&Tag{})
+	return true
 }
 
 
