@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 20:15:28
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-25 17:02:44
+ * @LastEditTime: 2020-08-27 20:07:34
  * @Description: plase write Description
  */
 package routers
@@ -24,7 +24,7 @@ import (
 func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger(), gin.Recovery())
-	gin.SetMode(setting.RunMode)
+	gin.SetMode(setting.ServerSetting.RunMode)
 	
 	//文档访问地址/swagger/index.html
 	r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

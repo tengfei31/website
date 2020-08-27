@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-21 11:54:20
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-25 15:14:33
+ * @LastEditTime: 2020-08-27 20:06:48
  * @Description: plase write Description
  */
 package v1
@@ -70,7 +70,7 @@ func GetArticles(c *gin.Context) {
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
 		code =  e.SUCCESS
-		data["lists"] = models.GetArticles(util.GetPage(c), setting.PageSize, maps)
+		data["lists"] = models.GetArticles(util.GetPage(c), setting.AppSetting.PageSize, maps)
 		data["total"] = models.GetArticleTotal(maps)
 	} else {
         for _, err := range valid.Errors {

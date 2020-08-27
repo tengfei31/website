@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 13:36:50
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-19 20:27:26
+ * @LastEditTime: 2020-08-27 20:37:45
  * @Description: plase write Description
  */
 package setting
@@ -14,65 +14,66 @@ import (
 	"github.com/go-ini/ini"
 )
 
-var (
-	Cfg *ini.File
-	//base
+type App struct {
+	JwtSecret string 
+	PageSize int
+	RuntimeRootPath string
+
+	ImagePrefixUrl string
+	ImageSavePath string
+	ImageMaxSize int
+	ImageAllowExts []string
+
+	LogSavePath string
+	LogSaveName string
+	LogFileExt string
+	TimeFormat string
+}
+var AppSetting = &App{}
+
+type Server struct {
 	RunMode string
-	//app
- 	PageSize int
- 	JwtSecret string
-	//server
- 	HTTPPort int
- 	HTTPHost string
+	HttpHost string
+	HttpPort int
 	ReadTimeout time.Duration
 	WriteTimeout time.Duration
-)
+}
+var ServerSetting = &Server{}
 
+type DataBase struct {
+	Type string
+	Host string
+	User string
+	Password string
+	DbName string
+	TablePrefix string
+}
+var DataBaseSetting  = &DataBase{}
 
-//初始化配置
-func init() {
-	var err error
-	Cfg, err = ini.Load("conf/app.ini")
+var DefaultMb int = 1024 * 1024
+
+func Setup() {
+	Cfg, err := ini.Load("conf/app.ini")
 	if err != nil {
 		log.Fatalf("Fail to parse 'conf/app.ini': %v", err)
 	}
-	Cfg = Cfg
-
-	LoadBase()
-	LoadServer()
-	LoadApp()
-}
-
-//加载base配置
-func LoadBase() {
-	// RunMode = Cfg.Section("").Key("RUN_MODE").MustString("debug")
-	sec, err := Cfg.GetSection("base")
+	err = Cfg.Section("app").MapTo(AppSetting)
 	if err != nil {
-		log.Fatalf("加载base配置失败:%v", err)
+		log.Fatalf("Cfg.MapTo AppSetting err: %v", err)
 	}
-	RunMode = sec.Key("RUN_MODE").MustString("debug")
-}
+	AppSetting.ImageMaxSize *= DefaultMb
 
-//加载app配置
-func LoadApp() {
-	sec, err := Cfg.GetSection("app")
+	err = Cfg.Section("server").MapTo(ServerSetting)
 	if err != nil {
-		log.Fatalf("加载app配置失败:%v", err)
+		log.Fatalf("Cfg.MapTo ServerSetting err: %v", err)
 	}
-	PageSize = sec.Key("PAGE_SIZE").MustInt(10)
-	JwtSecret = sec.Key("JWT_SECRET").MustString("xxxxxx@xxxaaqwe123")
-}
+	ServerSetting.ReadTimeout *= time.Second
+	ServerSetting.WriteTimeout *= time.Second
 
-func LoadServer() {
-	sec, err := Cfg.GetSection("server")
+	err = Cfg.Section("database").MapTo(DataBaseSetting)
 	if err != nil {
-		log.Fatalf("加载server配置失败:%v", err)
+		log.Fatalf("Cfg.MapTo DatabaseSetting err: %v", err)
 	}
-	HTTPPort = sec.Key("HTTP_PORT").MustInt(8080)
-	HTTPHost = sec.Key("HTTP_HOST").MustString("0.0.0.0")
-	ReadTimeout = time.Duration(sec.Key("READ_TIMEOUT").MustInt(60)) * time.Second
-	WriteTimeout = time.Duration(sec.Key("WRITE_TIMEOUT").MustInt(60)) * time.Second
-	
 }
 
 

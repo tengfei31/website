@@ -33,6 +33,7 @@ CREATE TABLE `blog_article` (
   `modified_by` varchar(255) DEFAULT '' COMMENT '修改人',
   `deleted_on` int(10) unsigned DEFAULT '0',
   `state` tinyint(3) unsigned DEFAULT '1' COMMENT '状态 0为禁用1为启用',
+  `cover_image_url` varchar(255) DEFAULT '' COMMENT '封面图片地址',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章管理';
 

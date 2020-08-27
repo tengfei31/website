@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 16:46:49
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-26 20:58:34
+ * @LastEditTime: 2020-08-27 20:18:45
  * @Description: plase write Description
  */
 package models
@@ -28,24 +28,20 @@ type Model struct {
 }
 
 //初始化db
-func init() {
+func Setup() {
 	var (
 		err error
 		dbType, dbName, user, password, host, tablePrefix string
 	)
 
-	sec, err := setting.Cfg.GetSection("database")
-	if err != nil {
-		log.Fatal(2, "Fail to get section 'database': %v", err)
-	}
-
-	dbType = sec.Key("TYPE").String()
-	dbName = sec.Key("DB_NAME").String()
-	user = sec.Key("USER").String()
-	password = sec.Key("PASSWORD").String()
-	host = sec.Key("HOST").String()
-	tablePrefix = sec.Key("TABLE_PREFIX").String()
-	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, dbName))
+	dbType = setting.DataBaseSetting.Type
+	dbName = setting.DataBaseSetting.DbName
+	user = setting.DataBaseSetting.User
+	password = setting.DataBaseSetting.Password
+	host = setting.DataBaseSetting.Host
+	tablePrefix = setting.DataBaseSetting.TablePrefix
+	var url string = fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, dbName) 
+	db, err = gorm.Open(dbType, url)
 	if err != nil {
 		log.Println(err)
 	}

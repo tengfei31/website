@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-25 14:05:57
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-25 15:02:35
+ * @LastEditTime: 2020-08-27 21:24:29
  * @Description: plase write Description
  */
 package logging
@@ -35,9 +35,14 @@ const (
 	FATAL
 )
 
-func init() {
-	filePath := GetLogFileFullPath()
-	F = openLogFile(filePath)
+func Setup() {
+	var err error
+	filename := GetLogFileName()
+	filePath := GetLogFilePath()
+	F, err = openLogFile(filename, filePath)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	logger = log.New(F, DefaultPrefix, log.LstdFlags)
 }
 

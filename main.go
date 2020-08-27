@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-18 19:10:20
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-27 17:07:23
+ * @LastEditTime: 2020-08-27 20:26:53
  * @Description: plase write Description
  */
 package main
@@ -12,16 +12,22 @@ import (
 	"syscall"
 
 	"github.com/fvbock/endless"
+	"github.com/tengfei31/website/models"
 	"github.com/tengfei31/website/pkg/logging"
 	"github.com/tengfei31/website/pkg/setting"
 	"github.com/tengfei31/website/routers"
 )
 
 func main() {
-	endless.DefaultReadTimeOut = setting.ReadTimeout
-	endless.DefaultWriteTimeOut = setting.WriteTimeout
+	setting.Setup()
+	models.Setup()
+	logging.Setup()
+
+	
+	endless.DefaultReadTimeOut = setting.ServerSetting.ReadTimeout
+	endless.DefaultWriteTimeOut = setting.ServerSetting.WriteTimeout
 	endless.DefaultMaxHeaderBytes = 1 << 20
-	endPoint := fmt.Sprintf("%s:%d", setting.HTTPHost, setting.HTTPPort)
+	endPoint := fmt.Sprintf("%s:%d", setting.ServerSetting.HttpHost, setting.ServerSetting.HttpPort)
 
 	server := endless.NewServer(endPoint, routers.InitRouter())
 	server.BeforeBegin = func(add string) {
