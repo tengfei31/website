@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 16:14:42
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-28 10:54:26
+ * @LastEditTime: 2020-08-28 23:32:58
  * @Description: plase write Description
  */
 package e
@@ -16,6 +16,8 @@ const (
 	ERROR_EXIST_TAG = 10001
 	ERROR_NOT_EXIST_TAG = 10002
 	ERROR_NOT_EXIST_ARTICLE = 10003
+	ERROR_CHECK_EXIST_ARTICLE_FAIL = 10004
+	ERROR_GET_ARTICLE_FAIL = 10005
 
 	ERROR_AUTH_CHECK_TOKEN_FAIL = 20001
 	ERROR_AUTH_CHECK_TOKEN_TIMEOUT = 20002

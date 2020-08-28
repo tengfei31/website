@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 13:36:50
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-27 20:37:45
+ * @LastEditTime: 2020-08-28 19:33:40
  * @Description: plase write Description
  */
 package setting
@@ -50,6 +50,16 @@ type DataBase struct {
 }
 var DataBaseSetting  = &DataBase{}
 
+type Redis struct {
+	Type string
+	Host string
+	Password string
+	MaxIdle int
+	MaxActive int
+	IdleTimeout time.Duration
+}
+var RedisSetting = &Redis{}
+
 var DefaultMb int = 1024 * 1024
 
 func Setup() {
@@ -74,6 +84,12 @@ func Setup() {
 	if err != nil {
 		log.Fatalf("Cfg.MapTo DatabaseSetting err: %v", err)
 	}
+
+	err = Cfg.Section("redis").MapTo(RedisSetting)
+	if err != nil {
+		log.Fatalf("Cfg.MapTo RedisSetting err: %v", err)
+	}
+	RedisSetting.IdleTimeout *= time.Second
 }
 
 

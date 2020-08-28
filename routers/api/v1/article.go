@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-21 11:54:20
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-28 16:43:55
+ * @LastEditTime: 2020-08-28 23:37:06
  * @Description: plase write Description
  */
 package v1
@@ -13,38 +13,44 @@ import (
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 	"github.com/tengfei31/website/models"
+	"github.com/tengfei31/website/pkg/app"
 	"github.com/tengfei31/website/pkg/e"
 	"github.com/tengfei31/website/pkg/logging"
 	"github.com/tengfei31/website/pkg/setting"
 	"github.com/tengfei31/website/pkg/util"
+	"github.com/tengfei31/website/service/article_service"
 	"github.com/unknwon/com"
 )
 
 //获取单个文章
 func GetArticle(c *gin.Context) {
+    appG := app.Gin{c}
 	id := com.StrTo(c.Param("id")).MustInt()
 	valid := validation.Validation{}
 	valid.Min(id, 1, "id").Message("ID必须大于0")
-	
-	code := e.INVALID_PARAMS
-	var data interface{}
-	if !valid.HasErrors() {
-		if models.ExistArticleById(id) {
-			data = models.GetArticle(id)
-			code = e.SUCCESS
-		} else {
-			code = e.ERROR_NOT_EXIST_ARTICLE
-		}
-	} else {
-		for _, err := range valid.Errors {
-            logging.Info(err.Key, err.Message)
-		}
-	}
-	c.JSON(http.StatusOK, gin.H{
-		"code" : code,
-		"msg" : e.GetMsg(code),
-		"data" : data,
-	})
+    
+    if valid.HasErrors() {
+        app.MakeErrors(valid.Errors)
+        appG.Response(http.StatusOK, e.INVALID_PARAMS, nil)
+        return
+    }
+    articleService := article_service.Article{Id: id}
+    exist, err := articleService.ExistById()
+    if err != nil {
+        appG.Response(http.StatusOK, e.ERROR_CHECK_EXIST_ARTICLE_FAIL, nil)
+        return
+    }
+    if exist == false {
+        appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_ARTICLE, nil)
+        return
+    }
+    article, err := articleService.Get()
+    if err != nil {
+        appG.Response(http.StatusOK, e.ERROR_GET_ARTICLE_FAIL, nil)
+        return
+    }
+
+    appG.Response(http.StatusOK, e.SUCCESS, article)
 }
 
 //获取多个文章
