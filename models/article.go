@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-21 14:38:33
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-27 17:06:09
+ * @LastEditTime: 2020-08-28 16:42:11
  * @Description: plase write Description
  */
 package models
@@ -22,8 +22,9 @@ type Article struct {
 	Desc string `json:"desc"`
     Content string `json:"content"`
     CreatedBy string `json:"created_by"`
+	CoverImageUrl string `json:"cover_image_url"`
     ModifiedBy string `json:"modified_by"`
-    State int `json:"state"`
+	State int `json:"state"`
 }
 
 func ExistArticleById(id int) bool {
@@ -65,7 +66,8 @@ func AddArticle(data map[string]interface{}) bool {
 		Title : data["title"].(string),
         Desc : data["desc"].(string),
         Content : data["content"].(string),
-        CreatedBy : data["created_by"].(string),
+		CreatedBy : data["created_by"].(string),
+		CoverImageUrl : data["cover_image_url"].(string),
         State : data["state"].(int),
 	})
 	return true

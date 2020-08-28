@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-27 21:31:00
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-27 21:49:00
+ * @LastEditTime: 2020-08-28 15:31:16
  * @Description: plase write Description
  */
 package upload
@@ -65,7 +65,7 @@ func CheckImage(src string) error {
 	if err != nil {
 		return fmt.Errorf("os.Getwd err: %v", err)
 	}
-	err = file.IsNotExistMkDir(src)
+	err = file.IsNotExistMkDir(fmt.Sprintf("%s/%s", dir, src))
 	if err != nil {
 		return fmt.Errorf("file.IsNotExistMkDir err: %v", err)
 	}

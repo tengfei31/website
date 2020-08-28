@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 16:14:42
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-19 16:15:34
+ * @LastEditTime: 2020-08-28 10:54:26
  * @Description: plase write Description
  */
 package e
@@ -21,4 +21,8 @@ const (
 	ERROR_AUTH_CHECK_TOKEN_TIMEOUT = 20002
 	ERROR_AUTH_TOKEN = 20003
 	ERROR_AUTH = 20004
+
+	ERROR_UPLOAD_SAVE_IMAGE_FAIL = 30001
+	ERROR_UPLOAD_CHECK_IMAGE_FAIL = 30002
+	ERROR_UPLOAD_CHECK_IMAGE_FORMAT = 30003
 )

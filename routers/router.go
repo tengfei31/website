@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 20:15:28
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-27 20:07:34
+ * @LastEditTime: 2020-08-28 15:42:49
  * @Description: plase write Description
  */
 package routers
@@ -16,6 +16,7 @@ import (
 	_ "github.com/tengfei31/website/docs"
 	"github.com/tengfei31/website/middleware/jwt"
 	"github.com/tengfei31/website/pkg/setting"
+	"github.com/tengfei31/website/pkg/upload"
 	"github.com/tengfei31/website/routers/api"
 	v1 "github.com/tengfei31/website/routers/api/v1"
 )
@@ -28,6 +29,8 @@ func InitRouter() *gin.Engine {
 	
 	//文档访问地址/swagger/index.html
 	r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.POST("upload", api.UploadImage)
+	r.StaticFS("upload/images", http.Dir(upload.GetImageFullPath()))
 
 	//授权路由
 	r.GET("auth", api.GetAuth)

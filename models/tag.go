@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-19 21:01:58
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-27 17:04:58
+ * @LastEditTime: 2020-08-28 16:18:29
  * @Description: plase write Description
  */
 package models
@@ -45,7 +45,7 @@ func ExistTagByName (name string) bool {
 
 func ExistTagById (id int) bool {
 	var tag Tag
-	db.Select("id").Where("id = ?", id).First(&tag)
+	db.Select("id").Where("id = ? AND deleted_on = 0", id).First(&tag)
 	if tag.ID > 0 {
 		return true
 	}

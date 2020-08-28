@@ -2,6 +2,7 @@
 .vscode
 main
 runtime/logs
+runtime/upload
 __debug_bin
 website
 
