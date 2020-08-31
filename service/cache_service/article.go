@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-28 17:39:00
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-28 19:06:51
+ * @LastEditTime: 2020-08-28 23:55:50
  * @Description: plase write Description
  */
 package cache_service
@@ -29,7 +29,7 @@ func (a *Article) GetArticleKey() string {
 func (a *Article) GetArticlesKey() string {
 	keys := []string{
 		e.CACHE_ARTICLE,
-		"LIST"
+		"LIST",
 	}
 
 	if a.Id > 0 {

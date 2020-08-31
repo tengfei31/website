@@ -2,12 +2,13 @@
  * @Author: wtf
  * @Date: 2020-08-28 17:39:12
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-28 19:09:58
+ * @LastEditTime: 2020-08-28 23:57:35
  * @Description: plase write Description
  */
 package cache_service
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/tengfei31/website/pkg/e"
@@ -15,7 +16,7 @@ import (
 
 type Tag struct {
 	Id int
-	Name int
+	Name string
 	State int
 	PageNum int
 	PageSize int
@@ -24,7 +25,7 @@ type Tag struct {
 func (t *Tag) GetTagsKey() string {
 	keys := []string{
 		e.CACHE_TAG,
-		"LIST"
+		"LIST",
 	}
 	if t.Name != "" {
 		keys = append(keys, t.Name)

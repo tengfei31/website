@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-18 19:10:20
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-27 20:26:53
+ * @LastEditTime: 2020-08-28 23:56:41
  * @Description: plase write Description
  */
 package main
@@ -13,6 +13,7 @@ import (
 
 	"github.com/fvbock/endless"
 	"github.com/tengfei31/website/models"
+	"github.com/tengfei31/website/pkg/gredis"
 	"github.com/tengfei31/website/pkg/logging"
 	"github.com/tengfei31/website/pkg/setting"
 	"github.com/tengfei31/website/routers"
@@ -22,6 +23,7 @@ func main() {
 	setting.Setup()
 	models.Setup()
 	logging.Setup()
+	gredis.Setup()
 
 	
 	endless.DefaultReadTimeOut = setting.ServerSetting.ReadTimeout

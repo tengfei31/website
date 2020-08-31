@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-21 14:38:33
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-28 23:38:47
+ * @LastEditTime: 2020-08-28 23:53:53
  * @Description: plase write Description
  */
 package models
@@ -48,11 +48,13 @@ func GetArticles(pageNum int, pageSize int, maps interface{}) []Article {
 	return articles
 }
 
-func GetArticle(id int) Article {
+func GetArticle(id int) (*Article, error) {
 	var article Article
-	db.Where("id = ? AND deleted_on = ?", id, 0).First(&article)
-	db.Model(&article).Related(&article.Tag)
-	return article
+	err := db.Where("id = ? AND deleted_on = ?", id, 0).First(&article).Related(&article.Tag).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return &article, nil
 }
 
 func EditArticle(id int, data interface{}) bool {
