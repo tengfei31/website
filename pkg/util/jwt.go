@@ -22,8 +22,8 @@ func GenerateToken(username string, password string) (string, error) {
 		username,
 		password,
 		jwt.StandardClaims{
-			ExpiresAt : expireTime.Unix(),
-			Issuer : "gin-blog",
+			ExpiresAt: expireTime.Unix(),
+			Issuer:    "gin-blog",
 		},
 	}
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -42,8 +42,3 @@ func ParseToken(token string) (*Claims, error) {
 	}
 	return nil, err
 }
-
-
-
-
-

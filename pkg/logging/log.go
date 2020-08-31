@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-25 14:05:57
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-27 21:24:29
+ * @LastEditTime: 2020-08-31 17:18:30
  * @Description: plase write Description
  */
 package logging
@@ -20,11 +20,11 @@ type Level int
 var (
 	F *os.File
 
-	DefaultPrefix = ""
+	DefaultPrefix      = ""
 	DefaultCallerDepth = 2
-	logger *log.Logger
-	logPrefix = ""
-	levelFlags = []string{"DEBUG", "INFO", "WARN", "ERROR", "FATAL"}
+	logger             *log.Logger
+	logPrefix          = ""
+	levelFlags         = []string{"DEBUG", "INFO", "WARN", "ERROR", "FATAL"}
 )
 
 const (
@@ -80,5 +80,3 @@ func setPrefix(level Level) {
 	}
 	logger.SetPrefix(logPrefix)
 }
-
-

@@ -75,4 +75,3 @@ func CheckImage(src string) error {
 	}
 	return nil
 }
-

@@ -17,5 +17,3 @@ func EncodeMd5(val string) string {
 	m.Write([]byte(val))
 	return hex.EncodeToString(m.Sum(nil))
 }
-
-

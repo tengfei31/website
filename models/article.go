@@ -13,18 +13,17 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-
 type Article struct {
 	Model
-	TagId int `json:"tag_id" gorm:"index"`
-	Tag Tag `json:"tag"`
-	Title string `json:"title"`
-	Desc string `json:"desc"`
-    Content string `json:"content"`
-    CreatedBy string `json:"created_by"`
+	TagId         int    `json:"tag_id" gorm:"index"`
+	Tag           Tag    `json:"tag"`
+	Title         string `json:"title"`
+	Desc          string `json:"desc"`
+	Content       string `json:"content"`
+	CreatedBy     string `json:"created_by"`
 	CoverImageUrl string `json:"cover_image_url"`
-    ModifiedBy string `json:"modified_by"`
-	State int `json:"state"`
+	ModifiedBy    string `json:"modified_by"`
+	State         int    `json:"state"`
 }
 
 func ExistArticleById(id int) bool {
@@ -63,14 +62,14 @@ func EditArticle(id int, data interface{}) bool {
 }
 
 func AddArticle(data map[string]interface{}) bool {
-	db.Create(&Article {
-		TagId: data["tag_id"].(int),
-		Title : data["title"].(string),
-        Desc : data["desc"].(string),
-        Content : data["content"].(string),
-		CreatedBy : data["created_by"].(string),
-		CoverImageUrl : data["cover_image_url"].(string),
-        State : data["state"].(int),
+	db.Create(&Article{
+		TagId:         data["tag_id"].(int),
+		Title:         data["title"].(string),
+		Desc:          data["desc"].(string),
+		Content:       data["content"].(string),
+		CreatedBy:     data["created_by"].(string),
+		CoverImageUrl: data["cover_image_url"].(string),
+		State:         data["state"].(int),
 	})
 	return true
 }
@@ -80,19 +79,16 @@ func DeleteArticle(id int) bool {
 	return true
 }
 
-
-
-
 func (article *Article) BeforeCreate(scope *gorm.Scope) error {
-    scope.SetColumn("CreatedOn", time.Now().Unix())
+	scope.SetColumn("CreatedOn", time.Now().Unix())
 
-    return nil
+	return nil
 }
 
 func (article *Article) BeforeUpdate(scope *gorm.Scope) error {
-    scope.SetColumn("ModifiedOn", time.Now().Unix())
+	scope.SetColumn("ModifiedOn", time.Now().Unix())
 
-    return nil
+	return nil
 }
 
 func CleanAllArticle() bool {

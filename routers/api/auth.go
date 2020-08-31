@@ -18,7 +18,6 @@ import (
 	"github.com/tengfei31/website/pkg/util"
 )
 
-
 type auth struct {
 	Username string `valid:"Required; MaxSize(50)"`
 	Password string `valid:"Required; MaxSize(50)"`
@@ -42,7 +41,7 @@ func GetAuth(c *gin.Context) {
 				code = e.ERROR_AUTH_TOKEN
 			} else {
 				data["token"] = token
-				code =e.SUCCESS
+				code = e.SUCCESS
 			}
 		} else {
 			code = e.ERROR_AUTH
@@ -53,8 +52,8 @@ func GetAuth(c *gin.Context) {
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code" : code,
-		"msg" : e.GetMsg(code),
-		"data" : data,
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": data,
 	})
 }

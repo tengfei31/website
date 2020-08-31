@@ -20,10 +20,10 @@ var RedisConn *redis.Pool
 
 func Setup() error {
 	RedisConn = &redis.Pool{
-		MaxIdle: setting.RedisSetting.MaxIdle,
-		MaxActive: setting.RedisSetting.MaxActive,
+		MaxIdle:     setting.RedisSetting.MaxIdle,
+		MaxActive:   setting.RedisSetting.MaxActive,
 		IdleTimeout: setting.RedisSetting.IdleTimeout,
-		Dial: func () (redis.Conn, error) {
+		Dial: func() (redis.Conn, error) {
 			c, err := redis.Dial("tcp", setting.RedisSetting.Host)
 			if err != nil {
 				return nil, err
@@ -37,7 +37,7 @@ func Setup() error {
 			}
 			return c, nil
 		},
-		TestOnBorrow: func (c redis.Conn, t time.Time) error {
+		TestOnBorrow: func(c redis.Conn, t time.Time) error {
 			_, err := c.Do("PING")
 			return err
 		},
@@ -104,10 +104,3 @@ func LikeDeletes(key string) error {
 	}
 	return nil
 }
-
-
-
-
-
-
-

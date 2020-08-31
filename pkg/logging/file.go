@@ -16,8 +16,6 @@ import (
 	"github.com/tengfei31/website/pkg/setting"
 )
 
-
-
 func GetLogFilePath() string {
 	return fmt.Sprintf("%s%s", setting.AppSetting.RuntimeRootPath, setting.AppSetting.LogSavePath)
 }
@@ -43,10 +41,9 @@ func openLogFile(filename string, filePath string) (*os.File, error) {
 		return nil, fmt.Errorf("file.IsNotExistMkDir src: %s, err: %v", src, err)
 	}
 
-	f, err := file.Open(src + filename, os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0644)
+	f, err := file.Open(src+filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return nil, fmt.Errorf("Fail to OpenFile :%v", err)
 	}
 	return f, nil
 }
-

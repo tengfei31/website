@@ -55,4 +55,3 @@ func Open(name string, flag int, perm os.FileMode) (*os.File, error) {
 	}
 	return f, nil
 }
-

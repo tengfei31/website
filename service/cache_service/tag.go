@@ -15,10 +15,10 @@ import (
 )
 
 type Tag struct {
-	Id int
-	Name string
-	State int
-	PageNum int
+	Id       int
+	Name     string
+	State    int
+	PageNum  int
 	PageSize int
 }
 
@@ -41,6 +41,3 @@ func (t *Tag) GetTagsKey() string {
 	}
 	return strings.Join(keys, "_")
 }
-
-
-

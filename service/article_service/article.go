@@ -17,20 +17,19 @@ import (
 )
 
 type Article struct {
-	Id int
+	Id    int
 	TagId int
 	State int
-
 }
 
 func (a *Article) ExistById() (bool, error) {
 	return models.ExistArticleById(a.Id), nil
 }
 
-func  (a *Article) Get() (*models.Article, error) {
+func (a *Article) Get() (*models.Article, error) {
 	var cacheAricle *models.Article
 
-	cache := cache_service.Article{Id:a.Id}
+	cache := cache_service.Article{Id: a.Id}
 	key := cache.GetArticleKey()
 	if gredis.Exists(key) {
 		data, err := gredis.Get(key)
@@ -48,5 +47,3 @@ func  (a *Article) Get() (*models.Article, error) {
 	gredis.Set(key, article, 3600)
 	return article, nil
 }
-
-

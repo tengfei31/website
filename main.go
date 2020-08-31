@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-18 19:10:20
  * @LastEditors: wtf
- * @LastEditTime: 2020-08-28 23:56:41
+ * @LastEditTime: 2020-08-31 16:06:40
  * @Description: plase write Description
  */
 package main
@@ -25,7 +25,6 @@ func main() {
 	logging.Setup()
 	gredis.Setup()
 
-	
 	endless.DefaultReadTimeOut = setting.ServerSetting.ReadTimeout
 	endless.DefaultWriteTimeOut = setting.ServerSetting.WriteTimeout
 	endless.DefaultMaxHeaderBytes = 1 << 20
@@ -39,7 +38,6 @@ func main() {
 	if err != nil {
 		logging.Error(fmt.Sprintf("Server err: %v", err))
 	}
-
 
 	// server := &http.Server{
 	// 	Addr: fmt.Sprintf("%s:%d", setting.HTTPHost, setting.HTTPPort),

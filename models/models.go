@@ -17,20 +17,19 @@ import (
 	"github.com/tengfei31/website/pkg/setting"
 )
 
-
 var db *gorm.DB
 
 type Model struct {
-	ID int `gorm:"primary_key" json:"id"`
-	CreatedOn int `json:"created_on"`
+	ID         int `gorm:"primary_key" json:"id"`
+	CreatedOn  int `json:"created_on"`
 	ModifiedOn int `json:"modified_on"`
-	DeletedOn int `json:"deleted_on"`
+	DeletedOn  int `json:"deleted_on"`
 }
 
 //初始化db
 func Setup() {
 	var (
-		err error
+		err                                               error
 		dbType, dbName, user, password, host, tablePrefix string
 	)
 
@@ -40,16 +39,16 @@ func Setup() {
 	password = setting.DataBaseSetting.Password
 	host = setting.DataBaseSetting.Host
 	tablePrefix = setting.DataBaseSetting.TablePrefix
-	var url string = fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, dbName) 
+	var url string = fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, dbName)
 	db, err = gorm.Open(dbType, url)
 	if err != nil {
 		log.Println(err)
 	}
 
-	gorm.DefaultTableNameHandler = func (db *gorm.DB, defaultTableName string) string  {
-	    return tablePrefix + defaultTableName;
+	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
+		return tablePrefix + defaultTableName
 	}
-	
+
 	db.Callback().Create().Replace("gorm:update_time_stamp", updateTimeStampForCreateCallback)
 	db.Callback().Update().Replace("gorm:update_time_stamp", updateTimeStampForUpdateCallback)
 	db.Callback().Delete().Replace("gorm:delete", deleteCallback)
@@ -66,7 +65,7 @@ func CloseDB() {
 
 func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 	if !scope.HasError() {
-		nowTime:= time.Now().Unix()
+		nowTime := time.Now().Unix()
 		if createTimeField, ok := scope.FieldByName("CreatedOn"); ok {
 			if createTimeField.IsBlank {
 				createTimeField.Set(nowTime)
@@ -83,7 +82,7 @@ func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 func updateTimeStampForUpdateCallback(scope *gorm.Scope) {
 	if _, ok := scope.Get("gorm:update_column"); !ok {
 		scope.SetColumn("ModifiedOn", time.Now().Unix())
-	} 
+	}
 }
 
 func deleteCallback(scope *gorm.Scope) {
@@ -95,14 +94,14 @@ func deleteCallback(scope *gorm.Scope) {
 		deletedOnField, hasDeletedOnField := scope.FieldByName("DeletedOn")
 		var sql string
 		if !scope.Search.Unscoped && hasDeletedOnField {
-			sql = fmt.Sprintf("UPDATE %v SET %v=%v%v%v", 
-				scope.QuotedTableName(), 
-				scope.Quote(deletedOnField.DBName), 
+			sql = fmt.Sprintf("UPDATE %v SET %v=%v%v%v",
+				scope.QuotedTableName(),
+				scope.Quote(deletedOnField.DBName),
 				scope.AddToVars(time.Now().Unix()),
 				addExtraSpaceIfExist(scope.CombinedConditionSql()),
 				addExtraSpaceIfExist(extraOption))
 		} else {
-			sql = fmt.Sprintf("DELETE FROM %v%v%v", 
+			sql = fmt.Sprintf("DELETE FROM %v%v%v",
 				scope.QuotedTableName(),
 				addExtraSpaceIfExist(scope.CombinedConditionSql()),
 				addExtraSpaceIfExist(extraOption))
@@ -117,8 +116,3 @@ func addExtraSpaceIfExist(str string) string {
 	}
 	return ""
 }
-
-
-
-
-

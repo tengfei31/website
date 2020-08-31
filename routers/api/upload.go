@@ -25,9 +25,9 @@ func UploadImage(c *gin.Context) {
 		logging.Warn(err)
 		code = e.ERROR
 		c.JSON(http.StatusOK, gin.H{
-			"code":code,
-			"msg":e.GetMsg(code),
-			"data" : data,
+			"code": code,
+			"msg":  e.GetMsg(code),
+			"data": data,
 		})
 		return
 	}
@@ -61,6 +61,3 @@ func UploadImage(c *gin.Context) {
 		"data": data,
 	})
 }
-
-
-

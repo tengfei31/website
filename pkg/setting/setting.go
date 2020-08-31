@@ -15,49 +15,53 @@ import (
 )
 
 type App struct {
-	JwtSecret string 
-	PageSize int
+	JwtSecret       string
+	PageSize        int
 	RuntimeRootPath string
 
 	ImagePrefixUrl string
-	ImageSavePath string
-	ImageMaxSize int
+	ImageSavePath  string
+	ImageMaxSize   int
 	ImageAllowExts []string
 
 	LogSavePath string
 	LogSaveName string
-	LogFileExt string
-	TimeFormat string
+	LogFileExt  string
+	TimeFormat  string
 }
+
 var AppSetting = &App{}
 
 type Server struct {
-	RunMode string
-	HttpHost string
-	HttpPort int
-	ReadTimeout time.Duration
+	RunMode      string
+	HttpHost     string
+	HttpPort     int
+	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 }
+
 var ServerSetting = &Server{}
 
 type DataBase struct {
-	Type string
-	Host string
-	User string
-	Password string
-	DbName string
+	Type        string
+	Host        string
+	User        string
+	Password    string
+	DbName      string
 	TablePrefix string
 }
-var DataBaseSetting  = &DataBase{}
+
+var DataBaseSetting = &DataBase{}
 
 type Redis struct {
-	Type string
-	Host string
-	Password string
-	MaxIdle int
-	MaxActive int
+	Type        string
+	Host        string
+	Password    string
+	MaxIdle     int
+	MaxActive   int
 	IdleTimeout time.Duration
 }
+
 var RedisSetting = &Redis{}
 
 var DefaultMb int = 1024 * 1024
@@ -91,6 +95,3 @@ func Setup() {
 	}
 	RedisSetting.IdleTimeout *= time.Second
 }
-
-
-

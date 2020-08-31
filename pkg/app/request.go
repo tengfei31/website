@@ -18,5 +18,3 @@ func MakeErrors(errors []*validation.Error) {
 	}
 	return
 }
-
-
