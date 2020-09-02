@@ -2,7 +2,7 @@
  * @Author: wtf
  * @Date: 2020-08-18 19:10:20
  * @LastEditors: wtf
- * @LastEditTime: 2020-09-01 17:17:32
+ * @LastEditTime: 2020-09-02 11:57:59
  * @Description: plase write Description
  */
 package main
@@ -23,9 +23,13 @@ import (
 )
 
 var cronFlag int
+var httpPort int
+var httpHost string
 
 func init() {
 	flag.IntVar(&cronFlag, "cron", 0, "是否要启用cron定时任务")
+	flag.IntVar(&httpPort, "port", 8088, "http server port. default -port=8088")
+	flag.StringVar(&httpHost, "host", "127.0.0.1", "http server host. default -host=127.0.0.1")
 }
 //定时任务
 func cronTask() {
@@ -80,6 +84,13 @@ func main() {
 	gredis.Setup()
 	if cronFlag == 0 {
 		fmt.Println("启用http server")
+		if httpHost != "" {
+			setting.ServerSetting.HttpHost = httpHost
+		}
+		if httpPort > 0 {
+			setting.ServerSetting.HttpPort = httpPort
+		}
+		fmt.Printf("开启服务:%s:%d\n", setting.ServerSetting.HttpHost, setting.ServerSetting.HttpPort)
 		httpServer()
 	} else {
 		fmt.Println("启用cron定时任务")
